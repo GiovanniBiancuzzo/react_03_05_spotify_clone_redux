@@ -1,24 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import VerticalSidebarComponent from './components/VerticalSidebarComponent';
+import DashboardComponent from './components/DashboardComponent';
+import { Container, Row } from 'react-bootstrap';
+import BottomPlayerComponent from './components/BottomPlayerComponent';
+import AlbumDetailsComponent from './components/AlbumDetailsComponent';
+import ArtistPageComponent from './components/ArtistPageComponent';
+import LibraryPageComponent from './components/LibraryPageComponent';
 
-function App() {
+function App () {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Container fluid className='body'>
+        <Row >
+          <VerticalSidebarComponent />
+          <Routes>
+            <Route path='/' element={<DashboardComponent />}></Route>
+            <Route path='/library' element={<LibraryPageComponent />}></Route>
+            <Route path='/album_page/:id' element={<AlbumDetailsComponent />}></Route>
+            <Route path='/artist_page/:id' element={<ArtistPageComponent />}></Route>
+          </Routes>
+        </Row>
+      </Container>
+      <BottomPlayerComponent />
+    </BrowserRouter>
   );
 }
 
