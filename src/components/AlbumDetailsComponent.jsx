@@ -6,7 +6,7 @@ import TrackListComponent from "./TrackListComponent";
 import AlbumThumbnailComponent from "./AlbumThumbnailComponent";
 
 const AlbumDetailsComponent = () => {
-    const params = useParams();
+    const params = useParams().id;
     const [album, setAlbum] = useState();
 
     let headers = new Headers({
@@ -25,16 +25,19 @@ const AlbumDetailsComponent = () => {
     };
 
     useEffect(() => {
-        console.log(album);
         getAlbumDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <Row>
-            <AlbumThumbnailComponent album={album} />
-            <TrackListComponent tracks={album.tracks.data} />
-        </Row>
+        <>
+            {album && (
+                <Row>
+                    <AlbumThumbnailComponent album={album} />
+                    <TrackListComponent tracks={album.tracks.data} />
+                </Row>
+            )}
+        </>
     );
 };
 

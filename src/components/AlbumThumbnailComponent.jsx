@@ -1,35 +1,41 @@
 import { Button, Card, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { playPauseAction } from "../redux/actions";
 
 const AlbumThumbnailComponent = (props) => {
+    const navigate = useNavigate();
+
     return (
-        <Col md={3} className="text-center" id="img-container">
-            <Card>
-                <Card.Img
-                    src={props.album.cover}
-                    className="card-img img-fluid"
-                    alt="Album"
-                />
-                <Card.Body>
-                    <Card.Title className="mt-4 text-center">
-                        <p className="album-title">{props.album.title}</p>
-                    </Card.Title>
-                    <Card.Text className="text-center">
-                        <p className="artist-name">{props.album.artist.name}</p>
-                    </Card.Text>
-                    <div className="mt-4 text-center">
-                        <Button
-                            id="btnPlay"
-                            className="btn btn-success"
-                            type="button"
-                            onClick={() => playPauseAction}
-                        >
-                            Play
-                        </Button>
-                    </div>
-                </Card.Body>
-            </Card>
-        </Col>
+        <div className="col col-md-3 pt-5 text-center" id="img-container">
+            <img
+                src={props.album.cover}
+                className="card-img img-fluid"
+                alt="Album"
+            />
+            <div className="mt-4 text-center">
+                <p className="album-title">{props.album.title}</p>
+            </div>
+            <div className="text-center">
+                <p
+                    className="artist-name"
+                    onClick={() =>
+                        navigate(`/artist_page/${props.album.artist.id}`)
+                    }
+                >
+                    {props.album.artist.name}
+                </p>
+            </div>
+            <div className="mt-4 text-center">
+                <button
+                    id="btnPlay"
+                    className="btn btn-success"
+                    type="button"
+                    onClick={() => playPauseAction}
+                >
+                    Play
+                </button>
+            </div>
+        </div>
     );
 };
 

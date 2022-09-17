@@ -10,132 +10,120 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { addQueryAction, addToCatalogueAction } from "../redux/actions";
+import { MdCollectionsBookmark, MdHome } from "react-icons/md";
+import { BsSpotify } from "react-icons/bs";
+import { useEffect, useState } from "react";
 
 const VerticalSidebarComponent = () => {
-    const query = useSelector((state) => state.search.query);
+    const [query, setQuery] = useState("");
+    const queryStore = useSelector((state) => state.search.query);
     const location = useLocation();
     const dispatch = useDispatch();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addToCatalogueAction(query));
+        dispatch(addQueryAction(query));
+        // dispatch(addToCatalogueAction(query));
     };
 
-    // useEffect(()=>
-    // fetchDashboard()
-    // ,[])
+    useEffect(() => {
+        dispatch(addToCatalogueAction(queryStore));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [queryStore]);
 
     return (
-        <Col className="col-2">
-            <Navbar
-                collapseOnSelect
-                bg="navbar"
-                variant="white"
-                expand="md"
-                className="fixed-left justify-content-between sidebar"
-                // id="sidebar"
+        <div className="col-2">
+            <nav
+                className="navbar navbar-expand-md navbar-white bg-navbar fixed-left justify-content-between"
+                id="sidebar"
             >
-                <Container>
-                    <Link to={"/"}>
-                        <Navbar.Brand className="navbar-brand">
-                            <img
-                                src="../public/assets/img/Spotify_Logo.png"
-                                alt="Spotify_Logo"
-                                width="131"
-                                height="40"
-                            />
-                        </Navbar.Brand>
-                    </Link>
-                    {
-                        //? a che serve questo pulsante?
-                        //? <Button
-                        //?     className="navbar-toggler"
-                        //?     type="button"
-                        //?     data-toggle="collapse"
-                        //?     data-target="#navbarNavAltMarkup"
-                        //?     aria-controls="navbarNavAltMarkup"
-                        //?     aria-expanded="false"
-                        //?     aria-label="Toggle navigation"
-                        //? >
-                        //?     <span className="navbar-toggler-icon"></span>
-                        //? </Button>
-                    }
-                    <Navbar.Collapse id="navbarNavAltMarkup">
-                        <Nav>
-                            <Link
-                                to="/"
-                                className={`nav-link ${
-                                    location.pathname === "/" ? "active" : ""
-                                }`}
-                            >
-                                <i className="fas fa-home fa-lg"></i>&nbsp; Home
-                            </Link>
-                            <Link
-                                to="/library"
-                                className={`nav-link ${
-                                    location.pathname === "/library"
-                                        ? "active"
-                                        : ""
-                                }`}
-                            >
-                                <i className="fas fa-book-open fa-lg"></i>
-                                &nbsp; Your Library
-                            </Link>
-                            <Nav.Link>
-                                <Form onSubmit={handleSubmit}>
+                <div className="nav-container">
+                    <a className="navbar-brand" href="/">
+                        {/* <img
+                            src="../public/assets/img/Spotify_Logo.png"
+                            alt="Spotify_Logo"
+                            width="131"
+                            height="40"
+                        /> */}
+                        <BsSpotify /> Spotify
+                    </a>
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarNavAltMarkup"
+                        aria-controls="navbarNavAltMarkup"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div
+                        className="collapse navbar-collapse"
+                        id="navbarNavAltMarkup"
+                    >
+                        <div className="navbar-nav">
+                            <ul>
+                                <li>
+                                    <a className="nav-item nav-link" href="/">
+                                        <MdHome /> &nbsp; Home
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        className="nav-item nav-link"
+                                        href="/library"
+                                    >
+                                        <MdCollectionsBookmark />
+                                        &nbsp; Your Library
+                                    </a>
+                                </li>
+                                <li>
                                     <div className="input-group mt-3">
-                                        <Form.Group>
-                                            <Form.Control
+                                        <form onClick={handleSubmit}>
+                                            <input
                                                 type="text"
-                                                className="mb-2"
+                                                className="form-control mb-2"
                                                 id="searchField"
                                                 placeholder="Search"
+                                                aria-label="Search"
+                                                aria-describedby="basic-addon2"
                                                 value={query}
                                                 onChange={(e) =>
-                                                    dispatch(
-                                                        addQueryAction(
-                                                            e.target.value
-                                                        )
-                                                    )
+                                                    setQuery(e.target.value)
                                                 }
                                             />
-                                        </Form.Group>
-                                        {/* <div
+                                            <div
                                                 className="input-group-append"
-                                                style={{margin-bottom: 4%}}
-                                            > */}
-                                        <InputGroup.Append>
-                                            <InputGroup.Text>
-                                                <Button
-                                                    variant="outline-secondary"
-                                                    size="sm"
-                                                    type="button"
+                                                style={{ marginBottom: "4%" }}
+                                            >
+                                                <button
+                                                    className="btn btn-outline-secondary btn-sm"
+                                                    type="submit"
                                                     id="button-addon1"
                                                 >
                                                     GO
-                                                </Button>
-                                            </InputGroup.Text>
-                                        </InputGroup.Append>
-                                        {/* </div> */}
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
-                                </Form>
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
                 <div className="nav-btn">
-                    <Button className="signup-btn" type="button">
+                    <button className="btn signup-btn" type="button">
                         Sign Up
-                    </Button>
-                    <Button className="login-btn" type="button">
+                    </button>
+                    <button className="btn login-btn" type="button">
                         Login
-                    </Button>
-                    <Link to="#">Cookie Policy</Link> |
-                    <Link to="#"> Privacy</Link>
+                    </button>
+                    <a href="#">Cookie Policy</a> |<a href="#"> Privacy</a>
                 </div>
-            </Navbar>
-        </Col>
+            </nav>
+        </div>
     );
 };
 

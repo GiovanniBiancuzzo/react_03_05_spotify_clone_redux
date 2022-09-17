@@ -8,6 +8,7 @@ import BottomPlayerComponent from './components/BottomPlayerComponent';
 import AlbumDetailsComponent from './components/AlbumDetailsComponent';
 import ArtistPageComponent from './components/ArtistPageComponent';
 import LibraryPageComponent from './components/LibraryPageComponent';
+import NavbarComponent from './components/NavbarComponent';
 
 function App () {
   return (
@@ -15,12 +16,15 @@ function App () {
       <Container fluid className='body'>
         <Row >
           <VerticalSidebarComponent />
-          <Routes>
-            <Route path='/' element={<DashboardComponent />}></Route>
-            <Route path='/library' element={<LibraryPageComponent />}></Route>
-            <Route path='/album_page/:id' element={<AlbumDetailsComponent />}></Route>
-            <Route path='/artist_page/:id' element={<ArtistPageComponent />}></Route>
-          </Routes>
+          <div className="col-12 col-md-9 offset-md-3 mainPage">
+            <NavbarComponent />
+            <Routes>
+              <Route path='/' element={<DashboardComponent />}></Route>
+              <Route path='/library' element={<LibraryPageComponent />}></Route>
+              <Route path='/album_page/:id' element={<AlbumDetailsComponent />}></Route>
+              <Route path='/artist_page/:id' element={<ArtistPageComponent />}></Route>
+            </Routes>
+          </div>
         </Row>
       </Container>
       <BottomPlayerComponent />
